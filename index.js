@@ -42,7 +42,8 @@ client.on('message', message => {
         // Send "pong" to the same channel
         message.channel.send('pong');
     }
-    if (message.content.includes("à qui le dites-vous")) {
+    var str = "à qui le dites-vous";
+    if (message.content.includes(str.ignoreCase)) {
         const embed = new Discord.RichEmbed()
             .setTitle('A vous ! ')
             .setColor(0xFF0000)
