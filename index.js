@@ -14,8 +14,10 @@ client.on('ready', () => {
     console.log(now);
     client.channels.get('489783382516039701').send('Bot Marrons Online');
     axios.get('https://steppschuh-json-porn-v1.p.mashape.com/porn/?includedownloads=true&includeimages=true&offset=0&pornid=5617318243598336', {
-        'X-Mashape-Key': "XqNGLCV97Qmshyibno3GU4YllzYKp1B2BGBjsngg2H8jSjCIkO",
-        "Accept": "application/json"
+        headers: {
+            'X-Mashape-Key': "XqNGLCV97Qmshyibno3GU4YllzYKp1B2BGBjsngg2H8jSjCIkO",
+            "Accept": "application/json"
+        }
     }).then(response => {
         console.log(response.data)
     }).catch(e => {
