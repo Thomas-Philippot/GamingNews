@@ -11,12 +11,13 @@ let now = moment();
 client.on('ready', () => {
     console.log('I am ready!');
     newsChannel = client.channels.get('496343700310458378');
+    console.log(now);
     client.channels.get('489484167135100931').send('Hop au boulot ! je suis connecté')
 });
 
 let rule = new schedule.RecurrenceRule();
 rule.hour = 12;
-rule.minute = 15;
+rule.minute = 35;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
     axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
