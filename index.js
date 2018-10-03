@@ -31,6 +31,7 @@ let j = schedule.scheduleJob(rule, function () {
                 .setURL(article.url);
             newsChannel.send(embed);
             console.log('Article envoyé sur le serveur : ' + now.format("YYYY-MM-DD"));
+            console.log(article.title)
         })
         .catch(e => {
             console.log("error", e);
@@ -38,11 +39,11 @@ let j = schedule.scheduleJob(rule, function () {
 });
 
 client.on('message', message => {
-    // If the message is "ping"
+
     if (message.content === 'ping') {
-        // Send "pong" to the same channel
         message.channel.send('pong');
     }
+
     if (message.content.includes("à qui le dites-vous")) {
         const embed = new Discord.RichEmbed()
             .setTitle('A vous ! ')
@@ -56,6 +57,19 @@ client.on('message', message => {
             console.log('Bot logged out');
             client.destroy();
         })
+    }
+
+    if (message.content === 'help') {
+        const embed = new Discord.RichEmbed()
+            .setTitle('Voici la liste de mes commandes :')
+            .addBlankField()
+            .setDescription('Propose en d\'autres si tu veux, un préfixe sera ajouter plus tard')
+            .setColor(0xFF0000)
+            .setAuthor('Bot Marrons')
+            .addField('hammer_pick: Modération', 'logout')
+            .addField('😱 Fun', 'ping, à qui le dites-vous')
+            .addField(':newspaper: News: Modération', 'Chaque jour à 17h20 une news gaming est envoyé');
+        message.channel.send(embed);
     }
 });
 
