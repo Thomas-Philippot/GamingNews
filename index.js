@@ -20,7 +20,7 @@ rule.hour = 11;
 rule.minute = 10;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
-    axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
+    axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format("YYYY-MM-dd") +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
         .then(response => {
             article = response.data.articles[0];
             const embed = new Discord.RichEmbed()
@@ -30,7 +30,7 @@ let j = schedule.scheduleJob(rule, function () {
                 .setDescription(article.description)
                 .setURL(article.url);
             newsChannel.send(embed);
-            console.log('Article envoyé sur le serveur : ' + now.format());
+            console.log('Article envoyé sur le serveur : ' + now.format("YYYY-MM-dd"));
             console.log(article.title)
         })
         .catch(e => {
