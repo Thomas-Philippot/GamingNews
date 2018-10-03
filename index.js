@@ -16,8 +16,8 @@ client.on('ready', () => {
 });
 
 let rule = new schedule.RecurrenceRule();
-rule.hour = 13;
-rule.minute = 35;
+rule.hour = 12;
+rule.minute = 38;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
     axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format("YYYY-MM-dd") +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
@@ -44,8 +44,7 @@ client.on('message', message => {
         // Send "pong" to the same channel
         message.channel.send('pong');
     }
-    var str = "à qui le dites-vous";
-    if (message.content.includes(str.ignoreCase)) {
+    if (message.content.includes("à qui le dites-vous")) {
         const embed = new Discord.RichEmbed()
             .setTitle('A vous ! ')
             .setColor(0xFF0000)
