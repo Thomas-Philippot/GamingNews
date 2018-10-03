@@ -15,8 +15,8 @@ client.on('ready', () => {
 });
 
 let rule = new schedule.RecurrenceRule();
-rule.hour = 11;
-rule.minute = 50;
+rule.hour = 12;
+rule.minute = 0;
 let j = schedule.scheduleJob(rule, function () {
     axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
         .then(response => {
