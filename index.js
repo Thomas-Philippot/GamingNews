@@ -6,7 +6,7 @@ const moment = require('moment');
 const client = new Discord.Client();
 let newsChannel = '';
 let article = {};
-let now = moment();
+let now = moment().tz(process.env.TZ);
 
 client.on('ready', () => {
     console.log('I am ready!');
@@ -17,7 +17,7 @@ client.on('ready', () => {
 
 let rule = new schedule.RecurrenceRule();
 rule.hour = 12;
-rule.minute = 35;
+rule.minute = 50;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
     axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
