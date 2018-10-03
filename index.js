@@ -1,11 +1,9 @@
 const Discord = require('discord.js');
-const keys = require('./config');
 const axios = require('axios');
 const schedule = require('node-schedule');
 const moment = require('moment');
 
 const client = new Discord.Client();
-const token = keys.Discord_Key;
 let newsChannel = '';
 let article = {};
 let now = moment();
@@ -20,7 +18,7 @@ let rule = new schedule.RecurrenceRule();
 rule.hour = 16;
 rule.minute = 52;
 let j = schedule.scheduleJob(rule, function () {
-    axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + keys.API_Key)
+    axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
         .then(response => {
             article = response.data.articles[0];
             const embed = new Discord.RichEmbed()
@@ -53,4 +51,4 @@ client.on('message', message => {
     }
 });
 
-client.login(token);
+client.login(process.env.TOKEN);
