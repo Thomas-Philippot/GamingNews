@@ -17,10 +17,10 @@ client.on('ready', () => {
 
 let rule = new schedule.RecurrenceRule();
 rule.hour = 12;
-rule.minute = 38;
+rule.minute = 47;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
-    axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format("YYYY-MM-dd") +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
+    axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format("YYYY-MM-DD") +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
         .then(response => {
             article = response.data.articles[0];
             const embed = new Discord.RichEmbed()
@@ -30,7 +30,7 @@ let j = schedule.scheduleJob(rule, function () {
                 .setDescription(article.description)
                 .setURL(article.url);
             newsChannel.send(embed);
-            console.log('Article envoyé sur le serveur : ' + now.format("YYYY-MM-dd"));
+            console.log('Article envoyé sur le serveur : ' + now.format("YYYY-MM-DD"));
             console.log(article.title)
         })
         .catch(e => {
