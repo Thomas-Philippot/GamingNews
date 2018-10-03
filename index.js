@@ -12,7 +12,7 @@ client.on('ready', () => {
     console.log('I am ready!');
     newsChannel = client.channels.get('496343700310458378');
     console.log(now);
-    client.channels.get('489484167135100931').send('Hop au boulot ! je suis connecté')
+    client.channels.get('489783382516039701').send('Bot Marrons Online')
 });
 
 let rule = new schedule.RecurrenceRule();
@@ -30,7 +30,8 @@ let j = schedule.scheduleJob(rule, function () {
                 .setDescription(article.description)
                 .setURL(article.url);
             newsChannel.send(embed);
-            console.log('Article envoyé sur le serveur : ' + new Date());
+            console.log('Article envoyé sur le serveur : ' + now.format());
+            console.log(article.title)
         })
         .catch(e => {
             console.log("error", e);
