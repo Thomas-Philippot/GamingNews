@@ -13,6 +13,14 @@ client.on('ready', () => {
     newsChannel = client.channels.get('496343700310458378');
     console.log(now);
     client.channels.get('489783382516039701').send('Bot Marrons Online')
+    axios.get('https://steppschuh-json-porn-v1.p.mashape.com/porn/?includedownloads=true&includeimages=true&offset=0&pornid=5617318243598336', {
+        'X-Mashape-Key': "XqNGLCV97Qmshyibno3GU4YllzYKp1B2BGBjsngg2H8jSjCIkO",
+        "Accept": "application/json"
+    }).then(response => {
+        console.log(response.data)
+    }).catch(e => {
+        console.log(e)
+    }
 });
 
 let rule = new schedule.RecurrenceRule();
@@ -47,7 +55,7 @@ client.on('message', message => {
     if (message.content.includes("à qui le dites-vous")) {
         const embed = new Discord.RichEmbed()
             .setTitle('A vous ! ')
-            .setColor(0xFF0000)
+            .setColor(0x36d44a)
             .setImage('https://thumbs.gfycat.com/DangerousPowerlessFinwhale-mobile.jpg');
         message.channel.send(embed)
     }
@@ -64,7 +72,7 @@ client.on('message', message => {
             .setTitle('Voici la liste de mes commandes :')
             .addBlankField()
             .setDescription('Propose en d\'autres si tu veux, un préfixe sera ajouter plus tard')
-            .setColor(0xFF0000)
+            .setColor(0x36d44a)
             .setAuthor('Bot Marrons')
             .addField(':hammer_pick: Modération', 'logout', true)
             .addField(':joy: Fun', 'ping, à qui le dites-vous', true)
