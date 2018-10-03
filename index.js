@@ -16,8 +16,9 @@ client.on('ready', () => {
 
 let rule = new schedule.RecurrenceRule();
 rule.hour = 12;
-rule.minute = 0;
+rule.minute = 15;
 let j = schedule.scheduleJob(rule, function () {
+    console.log('event pushed');
     axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
         .then(response => {
             article = response.data.articles[0];
@@ -39,7 +40,7 @@ client.on('message', message => {
     // If the message is "ping"
     if (message.content === 'ping') {
         // Send "pong" to the same channel
-        message.channel.send('pong');
+        message.channel.send('pong v2');
     }
     var str = "à qui le dites-vous";
     if (message.content.includes(str.ignoreCase)) {
@@ -48,6 +49,13 @@ client.on('message', message => {
             .setColor(0xFF0000)
             .setImage('https://thumbs.gfycat.com/DangerousPowerlessFinwhale-mobile.jpg');
         message.channel.send(embed)
+    }
+
+    if (message.content === 'logout') {
+        message.channel.send('Bon ok je me casse...').then(() => {
+            console.log('Bot logged out');
+            client.destroy();
+        })
     }
 });
 
