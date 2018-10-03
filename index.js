@@ -6,7 +6,7 @@ const moment = require('moment');
 const client = new Discord.Client();
 let newsChannel = '';
 let article = {};
-let now = moment().tz(process.env.TZ);
+let now = moment();
 
 client.on('ready', () => {
     console.log('I am ready!');
@@ -16,8 +16,8 @@ client.on('ready', () => {
 });
 
 let rule = new schedule.RecurrenceRule();
-rule.hour = 12;
-rule.minute = 50;
+rule.hour = 10;
+rule.minute = 55;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
     axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
@@ -41,7 +41,7 @@ client.on('message', message => {
     // If the message is "ping"
     if (message.content === 'ping') {
         // Send "pong" to the same channel
-        message.channel.send('pong v2');
+        message.channel.send('pong');
     }
     var str = "à qui le dites-vous";
     if (message.content.includes(str.ignoreCase)) {
