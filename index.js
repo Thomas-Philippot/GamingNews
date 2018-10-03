@@ -17,7 +17,7 @@ client.on('ready', () => {
 
 let rule = new schedule.RecurrenceRule();
 rule.hour = 11;
-rule.minute = 5;
+rule.minute = 10;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
     axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format() +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
