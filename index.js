@@ -13,6 +13,7 @@ let now = moment();
 client.on('ready', () => {
     console.log('I am ready!');
     newsChannel = client.channels.get('496343700310458378');
+    client.channels.get('489484167135100931').send('Hop au boulot ! je connecte')
 });
 
 let rule = new schedule.RecurrenceRule();
