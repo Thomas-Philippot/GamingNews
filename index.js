@@ -66,9 +66,9 @@ client.on('message', message => {
             .setDescription('Propose en d\'autres si tu veux, un préfixe sera ajouter plus tard')
             .setColor(0xFF0000)
             .setAuthor('Bot Marrons')
-            .addField('hammer_pick: Modération', 'logout')
-            .addField('😱 Fun', 'ping, à qui le dites-vous')
-            .addField(':newspaper: News: Modération', 'Chaque jour à 17h20 une news gaming est envoyé');
+            .addField(':hammer_pick: Modération', 'logout', true)
+            .addField(':wahouleo: Fun', 'ping, à qui le dites-vous', true)
+            .addField(':newspaper: News', 'Chaque jour à 17h20 une news gaming est envoyé');
         message.channel.send(embed);
     }
 });
