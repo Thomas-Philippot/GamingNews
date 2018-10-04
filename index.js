@@ -10,19 +10,9 @@ let now = moment();
 
 client.on('ready', () => {
     console.log('I am ready!');
-    newsChannel = client.channels.get('496343700310458378');
+    newsChannel = client.channels.get('497308273532207118');
     console.log(now);
-    client.channels.get('489783382516039701').send('Bot Marrons Online');
-    axios.get('https://steppschuh-json-porn-v1.p.mashape.com/porn/?includedownloads=true&includeimages=true&offset=0&pornid=5617318243598336', {
-        headers: {
-            'X-Mashape-Key': "XqNGLCV97Qmshyibno3GU4YllzYKp1B2BGBjsngg2H8jSjCIkO",
-            "Accept": "application/json"
-        }
-    }).then(response => {
-        console.log(response.data)
-    }).catch(e => {
-        console.log(e)
-    });
+    client.channels.get('497307681195950081').send('Bot Marrons Online');
 });
 
 let rule = new schedule.RecurrenceRule();
