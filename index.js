@@ -40,7 +40,7 @@ let j = schedule.scheduleJob(rule, function () {
 
 client.on('message', message => {
 
-    if (message.content === 'ping') {
+    if (message.content.toLowerCase() === 'ping') {
         message.channel.send('pong');
     }
 
@@ -52,14 +52,14 @@ client.on('message', message => {
         message.channel.send(embed)
     }
 
-    if (message.content === 'logout') {
+    if (message.content.toLowerCase() === 'logout') {
         message.channel.send('Bot Marrons logged out').then(() => {
             console.log('Bot logged out');
             client.destroy();
         })
     }
 
-    if (message.content === 'help') {
+    if (message.content.toLowerCase() === 'help') {
         const embed = new Discord.RichEmbed()
             .setTitle('Voici la liste de mes commandes :')
             .addBlankField()
@@ -72,7 +72,7 @@ client.on('message', message => {
         message.channel.send(embed);
     }
 
-    if (message.content.startsWith('pls') || message.content.startsWith('!')) {
+    if (message.content.toLowerCase().startsWith('pls') || message.content.startsWith('!')) {
         message.delete();
     }
 });
