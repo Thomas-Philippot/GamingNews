@@ -53,7 +53,7 @@ client.on('message', message => {
     }
 
     if (message.content === 'logout') {
-        message.channel.send('Bon ok je me casse...').then(() => {
+        message.channel.send('Bot Marrons logged out').then(() => {
             console.log('Bot logged out');
             client.destroy();
         })
@@ -70,6 +70,10 @@ client.on('message', message => {
             .addField(':joy: Fun', 'ping, à qui le dites-vous', true)
             .addField(':newspaper: News', 'Chaque jour à 17h20\n une news gaming est envoyé', true);
         message.channel.send(embed);
+    }
+
+    if (message.content.startsWith('pls') || message.content.startsWith('!')) {
+        message.delete();
     }
 });
 
