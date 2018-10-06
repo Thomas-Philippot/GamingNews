@@ -66,7 +66,8 @@ client.on('message', message => {
             .setColor(0x36d44a)
             .addField(':hammer_pick: Modération', 'logout', true)
             .addField(':joy: Fun', 'ping, à qui le dites-vous', true)
-            .addField(':newspaper: News', 'Chaque jour à 17h20\n une news gaming est envoyé', true);
+            .addField(':newspaper: News', 'Chaque jour à 17h20\n une news gaming est envoyé', true)
+            .addField(':white_sun_small_cloud: Météo', 'Météo <nom de la ville>', true);
         message.channel.send(embed);
     }
 
@@ -79,7 +80,7 @@ client.on('message', message => {
         axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + ville[1] + '&appid=863668499362fb4884ebd97229f3b26b&units=metric').then( response => {
             var meteo = response.data;
             const embed = new Discord.RichEmbed()
-                .setTitle('Voici la Météo de' + ville[1])
+                .setTitle('Voici la Météo de ' + ville[1])
                 .setAuthor('Météo', 'http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png')
                 .setDescription(meteo.weather[0].description)
                 .setColor(0x36d44a)
