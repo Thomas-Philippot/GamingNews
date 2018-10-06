@@ -84,9 +84,9 @@ client.on('message', message => {
                 .setThumbnail('http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png')
                 .setDescription(meteo.weather[0].description)
                 .setColor(0x36d44a)
-                .addField('Température', meteo.main.temp, true)
-                .addField('Max', meteo.main.temp_max, true)
-                .addField('Min', meteo.main.temp_min, true);
+                .addField(':thermometer: Temp.', meteo.main.temp, true)
+                .addField(':fire: Max', meteo.main.temp_max, true)
+                .addField(':snowflake: Min', meteo.main.temp_min, true);
             message.channel.send(embed);
         }).catch(e => {
             console.log(e);
