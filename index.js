@@ -74,21 +74,23 @@ client.on('message', message => {
         message.delete();
     }
 
-    if (message.content.toLowerCase() === 'meteo nantes') {
-        axios.get('http://api.openweathermap.org/data/2.5/weather?q=Rennes&appid=863668499362fb4884ebd97229f3b26b').then( response => {
+    if (message.content.toLowerCase().startsWith('météo')) {
+        let ville = message.content.split(' ');
+        axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + ville[1] + '&appid=863668499362fb4884ebd97229f3b26b').then( response => {
             var meteo = response.data;
             const embed = new Discord.RichEmbed()
                 .setTitle('Voici la Météo de nantes:')
                 .addBlankField()
+                .setThumbnail('http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png')
                 .setDescription(meteo.weather[0].description)
                 .setColor(0x36d44a)
                 .addField('Température', meteo.main.temp, true)
                 .addField('Max', meteo.main.temp_max, true)
-                .addField('Min', meteo.main.temp_min, true)
-                .setThumbnail('http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png');
+                .addField('Min', meteo.main.temp_min, true);
             message.channel.send(embed);
         }).catch(e => {
-            console.log(e)
+            console.log(e);
+            message.channel.send(e)
         })
     }
 });
