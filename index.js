@@ -11,7 +11,6 @@ let now = moment();
 client.on('ready', () => {
     console.log('I am ready!');
     newsChannel = client.channels.get('497308273532207118');
-    console.log(now);
     client.channels.get('497307681195950081').send('Bot Marrons Online');
 });
 
@@ -65,7 +64,6 @@ client.on('message', message => {
             .addBlankField()
             .setDescription('Propose en d\'autres si tu veux, un préfixe sera ajouter plus tard')
             .setColor(0x36d44a)
-            .setAuthor('Bot Marrons')
             .addField(':hammer_pick: Modération', 'logout', true)
             .addField(':joy: Fun', 'ping, à qui le dites-vous', true)
             .addField(':newspaper: News', 'Chaque jour à 17h20\n une news gaming est envoyé', true);
@@ -74,6 +72,15 @@ client.on('message', message => {
 
     if (message.content.toLowerCase().startsWith('pls') || message.content.startsWith('!')) {
         message.delete();
+    }
+
+    if (message.content.toLowerCase() === 'meteo nantes') {
+        axios.get('http://api.openweathermap.org/data/2.5/weather?q=Rennes&appid=863668499362fb4884ebd97229f3b26b').then( response => {
+            var meteo = response.data;
+            console.log(meteo)
+        }).catch(e => {
+            console.log(e)
+        })
     }
 });
 
