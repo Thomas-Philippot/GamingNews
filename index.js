@@ -80,9 +80,9 @@ client.on('message', message => {
         axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + ville[1] + '&appid=863668499362fb4884ebd97229f3b26b&units=metric').then( response => {
             var meteo = response.data;
             const embed = new Discord.RichEmbed()
-                .setTitle('Voici la Météo de ' + ville[1])
-                .setAuthor('Météo', 'http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png')
-                .setDescription(meteo.weather[0].description)
+                .setTitle(meteo.weather[0].description)
+                .setAuthor(ville[1], 'http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png')
+                .setDescription()
                 .setColor(0x36d44a)
                 .addField(':thermometer: Temp.', meteo.main.temp + '°C', true)
                 .addField(':fire: Max', meteo.main.temp_max + '°C', true)
