@@ -82,7 +82,6 @@ client.on('message', message => {
             const embed = new Discord.RichEmbed()
                 .setTitle(meteo.weather[0].description)
                 .setAuthor(ville[1], 'http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png')
-                .setDescription()
                 .setColor(0x36d44a)
                 .addField(':thermometer: Temp.', meteo.main.temp + '°C', true)
                 .addField(':fire: Max', meteo.main.temp_max + '°C', true)
