@@ -14,7 +14,7 @@ client.on('ready', () => {
 });
 
 let rule = new schedule.RecurrenceRule();
-rule.hour = 15;
+rule.hour = 16;
 rule.minute = 20;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
