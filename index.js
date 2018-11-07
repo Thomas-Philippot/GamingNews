@@ -11,7 +11,6 @@ let now = moment();
 client.on('ready', () => {
     console.log('I am ready!');
     newsChannel = client.channels.get('497308273532207118');
-    client.channels.get('497307681195950081').send('Bot Marrons Online');
 });
 
 let rule = new schedule.RecurrenceRule();
