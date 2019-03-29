@@ -5,12 +5,14 @@ const moment = require('moment');
 
 const client = new Discord.Client();
 let newsChannel = '';
+let newsTechChannel = '';
 let article = {};
 let now = moment();
 
 client.on('ready', () => {
     console.log('I am ready!');
     newsChannel = client.channels.get('497308273532207118');
+    newsTechChannel = client.channels.get('497308200832466955');
 });
 
 let rule = new schedule.RecurrenceRule();
@@ -67,11 +69,11 @@ client.on('message', message => {
                 .setImage(article.urlToImage)
                 .setDescription(article.description)
                 .setURL(article.url);
-            newsChannel.send(embed);
+            newsTechChannel.send(embed);
             console.log('Article envoyé sur le serveur : ' + now.format("YYYY-MM-DD"));
             console.log(article.title)
         }).catch(e => {
-            newsChannel.send(e.message)
+            newsTechChannel.send(e.message)
         })
     }
 
