@@ -18,8 +18,15 @@ rule.hour = 16;
 rule.minute = 20;
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
-    axios.get('https://newsapi.org/v2/everything?q=Playstation&from=' + now.format("YYYY-MM-DD") +'&language=fr&sortBy=popularity&apiKey=' + process.env.API_Key)
-        .then(response => {
+    axios.get('https://newsapi.org/v2/everything',{
+        params: {
+            'q': 'Playstation',
+            'from': now.format("YYYY-MM-DD"),
+            'language': 'fr',
+            'sortBy': 'popularity',
+            'apiKey': process.env.API_Key
+        }
+    }).then(response => {
             article = response.data.articles[0];
             const embed = new Discord.RichEmbed()
                 .setTitle(article.title)
@@ -40,6 +47,29 @@ client.on('message', message => {
 
     if (message.content.toLowerCase() === 'ping') {
         message.channel.send('pong');
+    }
+
+    if (message.content.toLowerCase().startsWith('news ')) {
+        message = message.replace('news ', '');
+        axios.get('https://newsapi.org/v2/everything', {
+            params: {
+                'q': message,
+                'from': now.format("YYYY-MM-DD"),
+                'language': 'fr',
+                'sortBy': 'popularity',
+                'apiKey': process.env.API_Key
+            }
+        }).then(response => {
+            article = response.data.articles[0];
+            const embed = new Discord.RichEmbed()
+                .setTitle(article.title)
+                .setColor(0x36d44a)
+                .setImage(article.urlToImage)
+                .setDescription(article.description)
+                .setURL(article.url);
+            newsChannel.send(embed);
+            console.log('Article envoyé sur le serveur : ' + now.format("YYYY-MM-DD"));
+            console.log(article.title)
     }
 
     if (message.content.includes("à qui le dites-vous")) {
@@ -66,7 +96,8 @@ client.on('message', message => {
             .addField(':hammer_pick: Modération', 'logout', true)
             .addField(':joy: Fun', 'ping, à qui le dites-vous', true)
             .addField(':newspaper: News', 'Chaque jour à 17h20\n une news gaming est envoyé', true)
-            .addField(':white_sun_small_cloud: Météo', 'Météo <nom de la ville>', true);
+            .addField(':white_sun_small_cloud: Météo', 'Météo <nom de la ville>', true)
+            .addField(':newspaper: News', 'News <Recherche>', true);
         message.channel.send(embed);
     }
 
