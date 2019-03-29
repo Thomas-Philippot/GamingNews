@@ -51,7 +51,7 @@ client.on('message', message => {
     }
 
     if (message.content.toLowerCase().startsWith('news ')) {
-        message = message.content.replace('news ', '');
+        console.log(message.content.substring(5))
         axios.get('https://newsapi.org/v2/everything', {
             params: {
                 'q': message,
