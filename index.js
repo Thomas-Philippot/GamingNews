@@ -51,10 +51,9 @@ client.on('message', message => {
     }
 
     if (message.content.toLowerCase().startsWith('news ')) {
-        console.log(message.content.substring(5))
         axios.get('https://newsapi.org/v2/everything', {
             params: {
-                'q': message,
+                'q': message.content.substring(5),
                 'from': now.format("YYYY-MM-DD"),
                 'language': 'fr',
                 'sortBy': 'popularity',
