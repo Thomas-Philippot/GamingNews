@@ -39,6 +39,7 @@ let j = schedule.scheduleJob(rule, function () {
             console.log(article.title)
         })
         .catch(e => {
+            newsChannel.send(e.message)
             console.log("error", e);
         });
 });
@@ -70,6 +71,9 @@ client.on('message', message => {
             newsChannel.send(embed);
             console.log('Article envoyé sur le serveur : ' + now.format("YYYY-MM-DD"));
             console.log(article.title)
+        }).catch(e => {
+            newsChannel.send(e.message)
+        })
     }
 
     if (message.content.includes("à qui le dites-vous")) {
