@@ -75,6 +75,7 @@ client.on('message', message => {
         }).catch(e => {
             newsTechChannel.send(e.message)
         })
+        message.delete()
     }
 
     if (message.content.includes("à qui le dites-vous")) {
@@ -83,6 +84,7 @@ client.on('message', message => {
             .setColor(0x36d44a)
             .setImage('https://thumbs.gfycat.com/DangerousPowerlessFinwhale-mobile.jpg');
         message.channel.send(embed)
+        message.delete()
     }
 
     if (message.content.toLowerCase() === 'logout') {
@@ -104,6 +106,7 @@ client.on('message', message => {
             .addField(':white_sun_small_cloud: Météo', 'Météo <nom de la ville>', true)
             .addField(':newspaper: News', 'News <Recherche>', true);
         message.channel.send(embed);
+        message.delete()
     }
 
     if (message.content.toLowerCase().startsWith('pls') || message.content.startsWith('!')) {
@@ -126,6 +129,7 @@ client.on('message', message => {
             console.log(e);
             message.channel.send(e)
         })
+        message.delete()
     }
 });
 
