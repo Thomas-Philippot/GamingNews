@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const axios = require('axios');
 const schedule = require('node-schedule');
 const moment = require('moment');
+const dotenv = require('dotenv').config();
 
 const client = new Discord.Client();
 let newsChannel = '';

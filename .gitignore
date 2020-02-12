@@ -1,2 +1,4 @@
 #private keys
 #config.js
+.idea
+node_modules/
