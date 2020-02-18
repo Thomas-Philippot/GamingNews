@@ -27,7 +27,7 @@ let j = schedule.scheduleJob(rule, function () {
             'from': now.format("YYYY-MM-DD"),
             'language': 'fr',
             'sortBy': 'popularity',
-            'apiKey': process.env.API_Key
+            'apiKey': process.env.API_KEY
         }
     }).then(response => {
             article = response.data.articles[0];
@@ -60,7 +60,7 @@ client.on('message', message => {
                 'from': now.format("YYYY-MM-DD"),
                 'language': 'fr',
                 'sortBy': 'popularity',
-                'apiKey': process.env.API_Key
+                'apiKey': process.env.API_KEY
             }
         }).then(response => {
             article = response.data.articles[0];
