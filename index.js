@@ -10,10 +10,10 @@ let newsTechChannel = '';
 let article = {};
 let now = moment();
 
-client.on('ready', () => {
+client.on('ready', async () => {
     console.log('I am ready!');
-    newsChannel = client.channels.get('497308273532207118');
-    newsTechChannel = client.channels.get('497308200832466955');
+    newsChannel = await client.channels.fetch('497308273532207118');
+    newsTechChannel = await client.channels.fetch('497308200832466955');
 });
 
 let rule = new schedule.RecurrenceRule();
@@ -50,7 +50,7 @@ let j = schedule.scheduleJob(rule, function () {
 client.on('message', message => {
 
     if (message.content.toLowerCase() === 'ping') {
-        message.channel.send('pong');
+        message.channel.send('pong here');
     }
 
     if (message.content.toLowerCase().startsWith('news ')) {
@@ -102,6 +102,7 @@ client.on('message', message => {
             .setDescription('Propose en d\'autres si tu veux, un préfixe sera ajouter plus tard')
             .setColor(0x36d44a)
             .addField(':hammer_pick: Modération', 'logout', true)
+            .addField('Avoir le rôle Minecraft', 'give minecraft', true)
             .addField(':joy: Fun', 'ping, à qui le dites-vous', true)
             .addField(':newspaper: News', 'Chaque jour à 17h20\n une news gaming est envoyé', true)
             .addField(':white_sun_small_cloud: Météo', 'Météo <nom de la ville>', true)
@@ -132,6 +133,15 @@ client.on('message', message => {
         })
         message.delete()
     }
+
+    if (message.content.toLowerCase() === 'give minecraft') {
+        message.guild.roles.fetch('698910733219659836').then((response) => {
+            message.member.roles.add(response).catch((e) => {
+                console.log(e)
+            })
+        })
+    }
+
 });
 
 client.login(process.env.TOKEN);
