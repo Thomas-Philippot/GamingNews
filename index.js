@@ -138,7 +138,7 @@ client.on('message', message => {
         }).catch(e => {
             newsTechChannel.send(e.message)
         })
-        message.delete()
+        message.delete().catch(e => console.log(e));
     }
 
     if (message.content.includes("à qui le dites-vous")) {
@@ -146,8 +146,8 @@ client.on('message', message => {
             .setTitle('A vous ! ')
             .setColor(0x36d44a)
             .setImage('https://thumbs.gfycat.com/DangerousPowerlessFinwhale-mobile.jpg');
-        message.channel.send(embed)
-        message.delete()
+        message.channel.send(embed).catch(e => console.log(e));
+        message.delete().catch(e => console.log(e));
     }
 
     if (message.content.toLowerCase() === 'logout') {
@@ -160,7 +160,6 @@ client.on('message', message => {
     if (message.content.toLowerCase() === 'help') {
         const embed = new Discord.MessageEmbed()
             .setTitle('Voici la liste de mes commandes :')
-            .addBlankField()
             .setDescription('Propose en d\'autres si tu veux, un préfixe sera ajouter plus tard')
             .setColor(0x36d44a)
             .addField(':hammer_pick: Modération', 'logout', true)
@@ -169,18 +168,18 @@ client.on('message', message => {
             .addField(':newspaper: News', 'Chaque jour à 17h20\n une news gaming est envoyé', true)
             .addField(':white_sun_small_cloud: Météo', 'Météo <nom de la ville>', true)
             .addField(':newspaper: News', 'News <Recherche>', true);
-        message.channel.send(embed);
-        message.delete()
+        message.channel.send(embed).catch(e => console.log(e));;
+        message.delete().catch(e => console.log(e));
     }
 
     if (message.content.toLowerCase().startsWith('pls') || message.content.startsWith('!')) {
-        message.delete();
+        message.delete().catch(e => console.log(e));
     }
 
     if (message.content.toLowerCase().startsWith('météo')) {
         let ville = message.content.split(' ');
         axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + ville[1] + '&appid=863668499362fb4884ebd97229f3b26b&units=metric').then( response => {
-            var meteo = response.data;
+            const meteo = response.data;
             const embed = new Discord.RichEmbed()
                 .setTitle(meteo.weather[0].description)
                 .setAuthor(ville[1], 'http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png')
@@ -188,12 +187,12 @@ client.on('message', message => {
                 .addField(':thermometer: Temp.', meteo.main.temp + '°C', true)
                 .addField(':fire: Max', meteo.main.temp_max + '°C', true)
                 .addField(':snowflake: Min', meteo.main.temp_min + '°C', true);
-            message.channel.send(embed);
+            message.channel.send(embed).catch(e => console.log(e));
         }).catch(e => {
             console.log(e);
-            message.channel.send(e)
+            message.channel.send(e).catch(e => console.log(e));
         })
-        message.delete()
+        message.delete().catch(e => console.log(e));
     }
 
     if (message.content.toLowerCase() === 'give minecraft') {
@@ -206,4 +205,4 @@ client.on('message', message => {
 
 });
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN).catch(e => console.log(e));;
