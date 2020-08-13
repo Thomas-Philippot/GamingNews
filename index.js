@@ -112,7 +112,7 @@ let j = schedule.scheduleJob(rule, function () {
 client.on('message', message => {
 
     if (message.content.toLowerCase() === 'ping') {
-        message.channel.send('pong here');
+        message.channel.send('pong');
     }
 
     if (message.content.toLowerCase().startsWith('news ')) {
