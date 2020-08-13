@@ -180,7 +180,7 @@ client.on('message', message => {
         let ville = message.content.split(' ');
         axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + ville[1] + '&appid=863668499362fb4884ebd97229f3b26b&units=metric').then( response => {
             const meteo = response.data;
-            const embed = new Discord.RichEmbed()
+            const embed = new Discord.MessageEmbed()
                 .setTitle(meteo.weather[0].description)
                 .setAuthor(ville[1], 'http://openweathermap.org/img/w/' + meteo.weather[0].icon + '.png')
                 .setColor(0x36d44a)
@@ -193,14 +193,6 @@ client.on('message', message => {
             message.channel.send(e).catch(e => console.log(e));
         })
         message.delete().catch(e => console.log(e));
-    }
-
-    if (message.content.toLowerCase() === 'give minecraft') {
-        message.guild.roles.fetch('698910733219659836').then((response) => {
-            message.member.roles.add(response).catch((e) => {
-                console.log(e)
-            })
-        })
     }
 
 });
