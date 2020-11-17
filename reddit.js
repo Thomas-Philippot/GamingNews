@@ -51,6 +51,15 @@ function sendEmbed(post, channel) {
     channel.send(embed)
 
     if (post.post_hint === 'hosted:video') {
+        sendVideo(post).then((response) => {
+            sent = response
+        })
+    }
+    return sent
+}
+
+function sendVideo(post) {
+    return new Promise(((resolve) => {
         const url = post.secure_media.reddit_video.fallback_url.replace('https', 'http').replace('?source=fallback', '')
         const file = fs.createWriteStream("./files/file.mp4");
         const request = http.get(url, function(response) {
@@ -58,13 +67,13 @@ function sendEmbed(post, channel) {
             file.on('finish', function() {
                 const attachement = new Discord.MessageAttachment(url)
                 channel.send(attachement);
+                resolve(true)
             });
             request.setTimeout(60000, function() {
                 channel.send('Fichier trop lourd')
                 request.abort()
+                resolve(false)
             });
         });
-        sent = true
-    }
-    return sent
+    }))
 }
