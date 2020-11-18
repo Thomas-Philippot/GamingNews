@@ -19,15 +19,15 @@ client.on('message', (message) => {
     if (message.member.hasPermission("ADMINISTRATOR")) {
         if (message.content.toLowerCase().startsWith('reddit')) {
             const subreddit = message.content.split(' ')[1]
-            let sent = false
             if (subreddit) {
                 reddit.get(`/r/${subreddit}`).then((response) => {
-                    console.log(response.data.children)
-                    do {
-                        const random = Math.floor(Math.random() * 25)
-                        const post = response.data.children[random].data
-                        sent = sendEmbed(post, message.channel)
-                    } while (!sent)
+                    if (response.data.dist > 0) {
+                        loop(response, message).catch((e) => {
+                            console.log(e)
+                        })
+                    } else {
+                        message.channel.send('Subreddit introuvable')
+                    }
                 })
             }
         }
@@ -36,26 +36,39 @@ client.on('message', (message) => {
     }
 })
 
-function sendEmbed(post, channel) {
+async function loop(response, message) {
     let sent = false
-    const embed = new Discord.MessageEmbed()
-        .setTitle(post.title)
-        .setColor(0x36d44a)
-        .setURL(post.url);
+    do {
+        const random = Math.floor(Math.random() * 25)
+        const post = response.data.children[random].data
+        console.log(post)
+        sent = await sendEmbed(post, message.channel)
+    } while (!sent)
+}
 
-    if (post.post_hint == 'image') {
-        const image = post.preview.images[0].source.url.replace('amp;', '')
-        embed.setImage(post.url)
-        sent = true
-    }
-    channel.send(embed)
+function sendEmbed(post, channel) {
+    return new Promise((resolve => {
+        const embed = new Discord.MessageEmbed()
+            .setTitle(post.title)
+            .setColor(0x36d44a)
+            .setURL(post.url);
 
-    if (post.post_hint === 'hosted:video') {
-        sendVideo(post).then((response) => {
-            sent = response
-        })
-    }
-    return sent
+        if (post.post_hint === 'image' || post.post_hint === 'link') {
+            embed.setImage(post.url)
+            console.log(post.url)
+            channel.send(embed)
+            resolve(true)
+        }
+
+        if (post.post_hint === 'hosted:video') {
+            sendVideo(post).then((response) => {
+                channel.send(embed)
+                resolve(response)
+            })
+        } else {
+            resolve(false)
+        }
+    }))
 }
 
 function sendVideo(post) {
