@@ -1,15 +1,16 @@
-const Discord = require('discord.js');
-const axios = require('axios');
-const schedule = require('node-schedule');
-const moment = require('moment');
-const dotenv = require('dotenv').config();
+const Discord = require('discord.js')
+const axios = require('axios')
+const schedule = require('node-schedule')
+const moment = require('moment')
+const dotenv = require('dotenv').config()
 
-const client = new Discord.Client();
-let newsChannel = '';
-let newsTechChannel = '';
-let roleChannel = '';
-let article = {};
-let now = moment();
+const client = new Discord.Client()
+let newsChannel = ''
+let newsTechChannel = ''
+let roleChannel = ''
+let article = {}
+let lastArticle = {}
+let now = moment()
 let guild = {}
 let roles = []
 
@@ -78,21 +79,22 @@ client.on('messageReactionAdd', async (reaction) => {
     }
 })
 
-let rule = new schedule.RecurrenceRule();
-rule.hour = 16;
-rule.minute = 20;
+let rule = new schedule.RecurrenceRule()
+rule.hour = 16
+rule.minute = 20
 let j = schedule.scheduleJob(rule, function () {
     console.log('event pushed');
-    axios.get('https://newsapi.org/v2/everything',{
+    axios.get('https://newsapi.org/v2/top-headlines',{
         params: {
-            'q': 'Playstation',
-            'from': now.format("YYYY-MM-DD"),
-            'language': 'fr',
-            'sortBy': 'popularity',
+            'category': 'technology',
+            'country': 'fr',
             'apiKey': process.env.API_KEY
         }
     }).then(response => {
         article = response.data.articles[0];
+        if (article === lastArticle) {
+            article = response.data.articles[1]
+        }
         const embed = new Discord.MessageEmbed()
             .setTitle(article.title)
             .setColor(0x36d44a)
@@ -100,6 +102,7 @@ let j = schedule.scheduleJob(rule, function () {
             .setDescription(article.description)
             .setURL(article.url);
         newsChannel.send(embed);
+        lastArticle = article
         console.log('Article envoyé sur le serveur : ' + now.format("YYYY-MM-DD"));
         console.log(article.title)
     })
