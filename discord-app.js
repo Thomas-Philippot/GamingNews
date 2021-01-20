@@ -145,7 +145,7 @@ client.on('message', message => {
     }
 
     if (message.content.includes("à qui le dites-vous")) {
-        const embed = new Discord.RichEmbed()
+        const embed = new Discord.MessageEmbed()
             .setTitle('A vous ! ')
             .setColor(0x36d44a)
             .setImage('https://thumbs.gfycat.com/DangerousPowerlessFinwhale-mobile.jpg');
