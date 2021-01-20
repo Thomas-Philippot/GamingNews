@@ -129,7 +129,7 @@ client.on('message', message => {
             }
         }).then(response => {
             article = response.data.articles[0];
-            const embed = new Discord.RichEmbed()
+            const embed = new Discord.MessageEmbed()
                 .setTitle(article.title)
                 .setColor(0x36d44a)
                 .setImage(article.urlToImage)
