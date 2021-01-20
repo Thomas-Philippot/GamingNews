@@ -16,8 +16,8 @@ const reddit = new Reddit({
 })
 
 client.on('message', (message) => {
-    if (message.member.hasPermission("ADMINISTRATOR")) {
-        if (message.content.toLowerCase().startsWith('reddit')) {
+    if (message.content.toLowerCase().startsWith('reddit')) {
+        if (message.member.hasPermission("ADMINISTRATOR")) {
             const subreddit = message.content.split(' ')[1]
             if (subreddit) {
                 reddit.get(`/r/${subreddit}`).then((response) => {
@@ -30,9 +30,9 @@ client.on('message', (message) => {
                     }
                 })
             }
+        } else {
+            message.channel.send('You need admin permission')
         }
-    } else {
-        message.channel.send('You need admin permission')
     }
 })
 
