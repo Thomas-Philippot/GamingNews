@@ -24,7 +24,7 @@ function fetchBalance (user) {
         const balance = 0.000000001 * response.data.data.balance
         axios.get('https://pro-api.coinmarketcap.com/v1/tools/price-conversion', {
             headers: {
-                'X-CMC_PRO_API_KEY': '4781cbd8-52eb-4b88-976d-9e2cf1a5126a'
+                'X-CMC_PRO_API_KEY': process.env.ETH_API_KEY
             },
             params: {
                 amount: balance,
