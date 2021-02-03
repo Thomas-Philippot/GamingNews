@@ -19,7 +19,7 @@ client.on('ready', async () => {
     console.log('I am ready!');
     newsChannel = await client.channels.fetch('497308273532207118');
     newsTechChannel = await client.channels.fetch('497308200832466955');
-    roleChannel = await client.channels.fetch('743370590127390732');
+    roleChannel = await client.channels.fetch('806486605434454046');
 
     // list rôles available for users
     const pokemonRole = await guild.roles.fetch('494102408260222976')
