@@ -7,77 +7,17 @@ const dotenv = require('dotenv').config()
 const client = new Discord.Client()
 let newsChannel = ''
 let newsTechChannel = ''
-let roleChannel = ''
 let article = {}
 let lastArticle = {}
 let now = moment()
 let guild = {}
-let roles = []
 
 client.on('ready', async () => {
     guild = client.guilds.cache.first()
     console.log('I am ready!');
     newsChannel = await client.channels.fetch('497308273532207118');
     newsTechChannel = await client.channels.fetch('497308200832466955');
-    roleChannel = await client.channels.fetch('806486605434454046');
-
-    // list rôles available for users
-    const pokemonRole = await guild.roles.fetch('494102408260222976')
-    const minecraftRole = await guild.roles.fetch('698910733219659836')
-    const gtaRole = await guild.roles.fetch('743395573687648337')
-    const apexRole = await guild.roles.fetch('743395624191262740')
-    const r6Role = await guild.roles.fetch('743395485544349767')
-    const legendsRole = await guild.roles.fetch('490106907197964318')
-
-    // list emojies for rôles
-    const pokemonGo = '743376276336672769'
-    const minecraft = '743376250923515935'
-    const gta = '743376979369263105'
-    const apex = '743376143486419004'
-    const r6 = '743376795809873920'
-    const dragonBall = '490096528216686623'
-
-    roles[pokemonGo] = pokemonRole
-    roles[minecraft] = minecraftRole
-    roles[gta] = gtaRole
-    roles[apex] = apexRole
-    roles[r6] = r6Role
-    roles[dragonBall] = legendsRole
-
-    // send message with rôles has reactions
-    const message = new Discord.MessageEmbed()
-        .setTitle('Clique sur les jeux auxquels tu joues afin d\'avoir accès aux salons dédier.')
-        .setDescription('les jeux disponibles sont :')
-        .setColor(0x36d44a)
-        .addField('Pokemon Go', 'Le jeu mobile', true)
-        .addField('Dragon Ball Legends', 'Le jeu mobile', true)
-        .addField('Apex Legends', 'Le battle royal de chez Respawn Entertainment', true)
-        .addField('GTA V', 'la grande licence de chez Rockstar Games', true)
-        .addField('Minecraft', 'Ce jeux incontournable', true)
-        .addField('R6', 'Rainbow Six Siege un fps réalise de chez Ubisoft', true)
-    roleChannel.send(message).then(async (response) => {
-        await response.react(pokemonGo)
-        await response.react(dragonBall)
-        await response.react(apex)
-        await response.react(gta)
-        await response.react(minecraft)
-        await response.react(r6)
-    });
 });
-
-client.on('messageReactionAdd', async (reaction) => {
-    if (reaction.message.channel === roleChannel) {
-        let role = roles[reaction.emoji.id]
-        let users = await reaction.users.fetch()
-
-        const noBot = users.filter(user => !user.bot)
-        noBot.forEach((user) => {
-            guild.member(user).fetch().then((member) => {
-                member.roles.add(role)
-            })
-        })
-    }
-})
 
 let rule = new schedule.RecurrenceRule()
 rule.hour = 16

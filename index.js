@@ -1,5 +1,4 @@
-require('./discord-app.js');
-
-require('./reddit.js');
-
-require('./cruxpool.js')
+require('./modules/discord-app.js');
+require('./modules/reddit.js');
+require('./modules/cruxpool.js')
+require('./modules/ethereum.js')
