@@ -4,8 +4,17 @@ const { client } = require('./discord-app')
 const http = require('http');
 const fs = require('fs');
 const dotenv = require('dotenv').config();
+const winston = require('winston');
+const path = require('path')
 
-const admin = 418426349934477332
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+        new winston.transports.File({ filename: path.join(__dirname, '../log', 'reddit.log'), }),
+    ],
+});
 
 const reddit = new Reddit({
     username: 'Adewale56',
@@ -23,7 +32,7 @@ client.on('message', (message) => {
                 reddit.get(`/r/${subreddit}`).then((response) => {
                     if (response.data.dist > 0) {
                         loop(response, message).catch((e) => {
-                            console.log(e)
+                            logger.error(e.message)
                         })
                     } else {
                         message.channel.send('Subreddit introuvable')
@@ -41,7 +50,6 @@ async function loop(response, message) {
     do {
         const random = Math.floor(Math.random() * 25)
         const post = response.data.children[random].data
-        console.log(post)
         sent = await sendEmbed(post, message.channel)
     } while (!sent)
 }
@@ -55,7 +63,6 @@ function sendEmbed(post, channel) {
 
         if (post.post_hint === 'image' || post.post_hint === 'link') {
             embed.setImage(post.url)
-            console.log(post.url)
             channel.send(embed)
             resolve(true)
         }

@@ -4,8 +4,19 @@ const { client } = require('./discord-app')
 const dotenv = require('dotenv').config();
 const cron = require('node-cron');
 
+const winston = require('winston');
+const path = require('path')
+
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+        new winston.transports.File({ filename: path.join(__dirname, '../log', 'cruxpool.log'), }),
+    ],
+});
+
 cron.schedule('30 17 * * *', () => {
-    console.log('running every day');
     client.users.fetch('365160130532081666').then((user) => {
         fetchBalance(user)
     })
@@ -34,7 +45,11 @@ function fetchBalance (user) {
         }).then((response) => {
             const eur = response.data.data.quote.EUR.price
             sendBalance(balance, eur, user)
+        }).catch((e) => {
+            logger.error(e.message)
         })
+    }).catch((e) => {
+        logger.error(e.message)
     })
 }
 
